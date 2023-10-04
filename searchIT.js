@@ -72,13 +72,13 @@ function updateResultsOnInput() {
 }
 
 
-// Function to highlight matching text within a string
+// Function to highlight matching text within a string(results)
 function highlightMatchingText(text, query) {
     const regex = new RegExp(`(${query})`, 'gi');
     return text.replace(regex, '<span class="highlight">$1</span>');
 }
 
-// Function to open the modal and display city details
+// Function to open the modal and display city details after user clicks
 function openModal(city) {
     const modal = document.getElementById('modal');
     const modalContent = document.getElementById('modalContent');
