@@ -3,6 +3,9 @@
 <head>
     <title>searchIT</title>
     <link rel="stylesheet" type="text/css" href="searchIT.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -11,8 +14,14 @@
     </header>
     <!-- Hide the results container by default -->
     <div id="results" style="display: none;"></div>
+    <!-- Modal container -->
     <div id="modal" class="hidden">
-        <!-- Modal content goes here -->
+        <div class="modal-content">
+            <!-- Close (X) button to close the modal -->
+            <span id="closeModal" class="close">&times;</span>
+            <!-- City details will be displayed here -->
+            <div id="modalContent"></div>
+        </div>
     </div>
     <script src="searchIT.js"></script>
 </body>
