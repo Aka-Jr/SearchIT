@@ -31,17 +31,20 @@ function updateResultsOnInput() {
         // Filter cities based on the search query
         const matchingCities = data.filter(city => {
             const cityName = city.city.toLowerCase();
-            return cityName.includes(searchQuery);
+            const stateName = city.state.toLowerCase();
+            return cityName.includes(searchQuery) || stateName.includes(searchQuery);
         });
 
         // Display matching cities and their details
         if (matchingCities.length > 0) {
-            // Modify this part of your search results HTML generation code
+    
             const resultsHTML = matchingCities.map(city => {
                 const growthClass = parseFloat(city.growth_from_2000_to_2013) > 0 ? 'positive-growth' : 'negative-growth';
+                const cityName = highlightMatchingText(city.city, searchQuery);
+                const stateName = highlightMatchingText(city.state, searchQuery);
                 return `
                     <div class="result">
-                        <strong>${city.city}, ${city.state}</strong><br>
+                        <strong>${cityName}, ${stateName}</strong><br>
                         Population: ${city.population}<br>
                         Growth: <span class="${growthClass}">${city.growth_from_2000_to_2013}</span>
                     </div>`;
@@ -50,20 +53,30 @@ function updateResultsOnInput() {
             resultsContainer.innerHTML = resultsHTML;
             resultsContainer.style.display = 'block'; // Show results
 
-            // Add click event listeners to open the modal when a result is clicked
+            // click event listeners to open the modal when a result is clicked
             const resultElements = document.querySelectorAll('.result');
             resultElements.forEach((resultElement, index) => {
                 resultElement.addEventListener('click', () => {
                     openModal(matchingCities[index]);
                 });
             });
-        } else {
-            resultsContainer.style.display = 'none'; // Hide results if no matches
+        }else {
+            // Display  message when there are no matches
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('no-matches-message');
+            messageDiv.textContent = 'The city or state you entered is not in the list.';
+            resultsContainer.appendChild(messageDiv);
+            resultsContainer.style.display = 'block'; // Show message
         }
     });
 }
 
-// ... (Previous JavaScript code remains the same)
+
+// Function to highlight matching text within a string
+function highlightMatchingText(text, query) {
+    const regex = new RegExp(`(${query})`, 'gi');
+    return text.replace(regex, '<span class="highlight">$1</span>');
+}
 
 // Function to open the modal and display city details
 function openModal(city) {
